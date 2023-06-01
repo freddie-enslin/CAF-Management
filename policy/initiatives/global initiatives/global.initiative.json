@@ -1,0 +1,66 @@
+{
+    "properties": {
+      "displayName": "Global Policies",
+      "policyType": "Custom",
+      "description": "Global policies for an Enterprise Cloud",
+      "metadata": {
+        "version": "0.0.1",
+        "category": "Governance"
+      },
+      "parameters": {
+        "listOfAllowedLocations": {
+          "type": "Array",
+          "metadata": {
+            "description": "The list of allowed locations for resources.",
+            "displayName": "Allowed locations",
+            "strongType": "location"
+          },
+          "defaultValue": "australiaeast",
+          "allowedValues": [
+            "australiaeast",
+            "australiasoutheast"
+          ]
+        },
+        "effect": {
+          "type": "string",
+          "metadata": {
+            "displayName": "Effect",
+            "description": "The effect determines what happens when the policy rule is evaluated to match"
+          },
+          "allowedValues": [
+            "audit",
+            "Deny",
+            "Disabled"
+          ],
+          "defaultValue": "Audit"
+        }
+      },
+      "policyDefinitions": [
+        {
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
+          "parameters": {
+            "listOfAllowedLocations": {
+              "value": "[parameters('listOfAllowedLocations')]"
+            }
+          }
+        },
+        {
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988",
+          "parameters": {
+            "listOfAllowedLocations": {
+              "value": "[parameters('listOfAllowedLocations')]"
+            }
+          }
+        },
+        {
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/3657f5a0-770e-44a3-b44e-9431ba1e9735",
+          "parameters": {
+            "effect": {
+              "value": "[parameters('effect')]"
+            }
+          }
+        }
+      ]
+    }
+  }
+  
