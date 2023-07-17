@@ -1,0 +1,42 @@
+#
+# Azure deployment validation with GitHub Actions
+#
+
+# For action details see:
+# https://github.com/microsoft/ps-rule
+# https://azure.github.io/PSRule.Rules.Azure/creating-your-pipeline/
+
+name: Test
+
+on:
+  # Trigger this workflow on PRs to the default branch.
+  pull_request:
+    branches:
+      - main
+
+  # Run validation at least once a day to catch updates to rules.
+  schedule:
+    - cron: '0 0 * * *'
+
+  # Allow manual triggering of workflow.
+  workflow_dispatch:
+    inputs:
+      baseline:
+        default: Azure.Default
+        description: The baseline to use for analysis. By default use the latest rules.
+        type: string
+
+# Constrain permissions.
+permissions: {}
+
+jobs:
+  test:
+    name: 🔍 Test
+    uses: ./.github/workflows/analysis.yaml
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    with:
+      # Configure the current baseline for scanning.
+      baseline: ${{ inputs.baseline || 'Azure.GA_2023_03' }}

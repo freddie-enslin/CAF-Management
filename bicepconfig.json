@@ -1,0 +1,14 @@
+{
+  "moduleAliases": {
+    "br": {
+      "prd": {
+        "registry": "crazdevopsprod001.azurecr.io",
+        "modulePath": "private/bicep/modules/prd"
+      },
+      "dev": {
+        "registry": "crazdevopsprod001.azurecr.io",
+        "modulePath": "private/bicep/modules/dev"
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "defaults": {
+    "location": "australiaeast",
+    "mode": "deploy"
+  }
+}

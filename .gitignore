@@ -1,0 +1,10 @@
+.vs/
+reports/
+out/
+**/.DS_Store
+node_modules/
+.eslint.js
+package-lock.json
+package.json
+deployments/**/*.json
+modules/**/*.json

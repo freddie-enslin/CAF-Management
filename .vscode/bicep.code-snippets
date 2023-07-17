@@ -1,0 +1,63 @@
+{
+  "Azure management group deployment": {
+    "description": "Configure a management group deployment.",
+    "isFileTemplate": true,
+    "prefix": "bicep-management-group",
+    "scope": "bicep",
+    "body": [
+      "// Deployment for Azure Landing Zone hierarchy",
+      "targetScope = 'tenant'",
+      "",
+      "// ----------",
+      "// REFERENCES",
+      "// ----------",
+      "",
+      "",
+      "",
+      "// -----------------",
+      "// MANAGEMENT GROUPS",
+      "// -----------------",
+      "",
+      "@sys.description('Create a management group within the Cloud Adoption Framework.')",
+      "module mg '../../modules/management-group/v1/main.bicep' = {",
+      "  name: '${1}'",
+      "  params: {",
+      "    displayName: '${2}'",
+      "    parent: '${3:name}'",
+      "  }",
+      "}",
+      "",
+      "// -----------------",
+      "// POLICIES ENFORCED",
+      "// -----------------",
+      "",
+      "// -------------------",
+      "// POLICIES IN PREVIEW",
+      "// -------------------",
+      ""
+    ]
+  },
+  "Azure module tests": {
+    "scope": "bicep",
+    "prefix": "bicep-module-test",
+    "description": "Azure Bicep code for testing a new resource module.",
+    "body": [
+      "// Unit tests for the parent module",
+      "targetScope = 'tenant'",
+      "",
+      "// ----------",
+      "// REFERENCES",
+      "// ----------",
+      "",
+      "// ---------",
+      "// RESOURCES",
+      "// ---------",
+      "",
+      "@sys.description('Test a basic test.')",
+      "module test_basic '../main.bicep' = {",
+      "  name: 'test_basic'",
+      "}",
+      ""
+    ]
+  }
+}

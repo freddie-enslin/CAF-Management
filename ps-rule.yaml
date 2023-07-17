@@ -1,0 +1,68 @@
+#
+# PSRule configuration
+#
+
+# Please see the documentation for configuration options:
+# https://aka.ms/ps-rule/options
+# https://aka.ms/ps-rule-azure/options
+
+repository:
+  url: https://github.com/Aurizon/azure-governance.git
+  baseRef: main
+
+requires:
+  PSRule: '@pre >=2.9.0'
+  PSRule.Rules.Azure: '@pre >=1.27.3'
+
+include:
+  module:
+    - PSRule.Rules.Azure
+
+execution:
+  unprocessedObject: Ignore
+
+convention:
+  include:
+    - Org.CheckPolicyInitiatives
+    - Org.BicepModule
+
+output:
+  format: Sarif
+  path: reports/ps-rule-report.sarif
+  culture:
+    - en-US
+
+input:
+  pathIgnore:
+    - '**'
+    - '!deployments/**/*.bicep'
+    - '!modules/**/*.tests.bicep'
+
+binding:
+  preferTargetInfo: true
+  targetType:
+    - 'ResourceType'
+    - 'Type'
+
+configuration:
+  # Configure Bicep expansion.
+  AZURE_BICEP_CHECK_TOOL: true
+  AZURE_BICEP_MINIMUM_VERSION: 0.16.2
+  AZURE_BICEP_FILE_EXPANSION: true
+  AZURE_BICEP_FILE_EXPANSION_TIMEOUT: 30
+
+  # Configure testing
+  AZURE_TENANT:
+    countryCode: AU
+    tenantId: a74a1efc-372d-476c-802c-9cbbe5a5c71e
+    displayName: PSRule
+
+  AZURE_RESOURCE_GROUP:
+    location: 'australiaeast'
+    tags: {}
+
+rule:
+  includeLocal: true
+  exclude:
+    # Ignore false positive on subscription aliases. Review in July 2023 after fix in v1.28.0.
+    - Azure.Resource.UseTags

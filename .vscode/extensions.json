@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "redhat.vscode-yaml",
+    "eamodio.gitlens",
+    "ms-vscode.azurecli",
+    "ms-vscode.powershell",
+    "ms-azuretools.vscode-bicep",
+    "bewhite.psrule-vscode",
+    "github.vscode-pull-request-github",
+    "davidanson.vscode-markdownlint",
+    "ms-sarifvscode.sarif-viewer",
+    "bierner.markdown-mermaid",
+    "github.vscode-github-actions"
+  ]
+}
