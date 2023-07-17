@@ -1,0 +1,53 @@
+#
+# Reusable workflow for deploying Azure Infrastructure as Code
+#
+
+name: Deploy Azure
+
+on:
+  # Allow triggering of workflow as a reusable workflow.
+  workflow_call:
+    inputs:
+      landingZone:
+        description: The name of the landing zone and environment to deploy.
+        type: string
+        required: true
+      validate:
+        description: Validate the deployment instead of doing the deployment.
+        type: boolean
+        default: false
+
+jobs:
+  deploy_azure:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.landingZone }}
+    concurrency: ${{ inputs.landingZone }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Bicep
+        run: |
+          sudo curl -Lo bicep https://github.com/Azure/bicep/releases/download/v0.18.4/bicep-linux-x64
+          ls -l
+          sudo chmod +x ./bicep
+          sudo mv ./bicep /usr/local/bin/bicep
+          ls -l /usr/local/bin/bicep
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          allow-no-subscriptions: true
+
+      - name: Deploy to Azure
+        shell: pwsh
+        run: |
+          . ./build-azure.ps1
+          $params = @{}
+          if (![String]::IsNullOrEmpty('${{ inputs.validate }}') -and '${{ inputs.validate }}' -eq 'true') {
+            $params['Validate'] = $True
+          }
+          Publish-AzureLandingZoneHierarchy @params -DeploymentRoot deployments/ -Group '${{ inputs.landingZone }}'

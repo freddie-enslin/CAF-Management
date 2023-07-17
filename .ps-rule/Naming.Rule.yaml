@@ -1,0 +1,31 @@
+---
+# Synopsis: All management groups must start with 'mg-' and be lowercase only.
+apiVersion: github.com/microsoft/PSRule/v1
+kind: Rule
+metadata:
+  name: Org.ManagementGroupNaming
+spec:
+  type:
+    - Microsoft.Management/managementGroups
+  condition:
+    allOf:
+      - field: name
+        startsWith: mg-
+      - field: name
+        isLower: true
+
+---
+# Synopsis: All subscriptions must start with 'sub-' and be lowercase only.
+apiVersion: github.com/microsoft/PSRule/v1
+kind: Rule
+metadata:
+  name: Org.SubscriptionNaming
+spec:
+  type:
+    - Microsoft.Subscription/aliases
+  condition:
+    allOf:
+      - field: name
+        startsWith: sub-
+      - field: name
+        isLower: true

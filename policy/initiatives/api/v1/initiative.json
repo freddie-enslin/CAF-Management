@@ -1,0 +1,149 @@
+{
+  "properties": {
+    "displayName": "API Initiative",
+    "policyType": "Custom",
+    "description": "API policies for landing zones",
+    "metadata": {
+      "version": "0.0.1",
+      "category": "API Management"
+    },
+    "parameters": {
+      "effect": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Disabled",
+          "Deny"
+        ],
+        "defaultValue": "Audit"
+      },
+      "effectNotExists": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "AuditIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "AuditIfNotExists"
+      },
+      "endpointType": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Public Endpoint Type",
+          "description": "Public Endpoint Type for which to enforce the access check"
+        },
+        "allowedValues": [
+          "Management",
+          "Git",
+          "Gateway Configuration"
+        ],
+        "defaultValue": "Management"
+      },
+      "apiEvaluatedSkuNames": {
+        "type": "Array",
+        "Metadata": {
+          "displayName": "API Management SKU Names",
+          "description": "List of API Management SKUs against which this policy will be evaluated."
+        },
+        "allowedValues": [
+          "Developer",
+          "Basic",
+          "Standard",
+          "Premium",
+          "Consumption"
+        ],
+        "defaultValue": [
+          "Developer",
+          "Premium"
+        ]
+      }
+    },
+    "policyDefinitions": [
+      {
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/ee7495e7-3ba7-40b6-bfee-c29e22cc75d4",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('effect')]"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/c15dcc82-b93c-4dcb-9332-fbf121685b54",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('effect')]"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/92bb331d-ac71-416a-8c91-02f2cb734ce4",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('effect')]"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/b741306c-968e-4b67-b916-5675e5c709f4",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('effect')]"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/549814b6-3212-4203-bdc8-1548d342fb67",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('effect')]"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/f1cc7827-022c-473e-836e-5a51cae0b249",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('effect')]"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/ef619a2c-cc4d-4d03-b2ba-8c94a834d85b",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('effect')]"
+          },
+          "evaluatedSkuNames": {
+            "value": "[parameters('apiEvaluatedSkuNames')]"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/df73bd95-24da-4a4f-96b9-4e8b94b402bd",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('effectNotExists')]"
+          },
+          "endpointType": {
+            "value": "[parameters('endpointType')]"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/3aa03346-d8c5-4994-a5bc-7652c2a2aef1",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('effect')]"
+          }
+        }
+      }
+    ]
+  }
+}

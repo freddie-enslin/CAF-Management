@@ -1,0 +1,103 @@
+#
+# Validate and deploy Azure Infrastructure as Code
+#
+
+# For action details see:
+# https://azure.github.io/PSRule.Rules.Azure/creating-your-pipeline/
+
+name: Deploy
+
+on:
+  # Trigger this workflow on updates to default branch.
+  push:
+    branches:
+      - main
+    paths:
+      - deployments/**
+      - policy/**
+
+  # Run a scheduled daily deployment.
+  schedule:
+    - cron: '0 0 * * *'
+
+  # Allow manual triggering of workflow on demand.
+  workflow_dispatch:
+    inputs:
+      baseline:
+        default: Azure.GA_2023_03
+        description: The baseline to use for analysis. By default use the latest rules.
+        type: string
+      validate:
+        description: Validate the deployment instead of doing the deployment.
+        type: boolean
+        default: false
+
+# Constrain permissions.
+permissions: {}
+
+jobs:
+  test:
+    name: 🔍 Test
+    uses: ./.github/workflows/analysis.yaml
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    with:
+      # Configure the current baseline for scanning.
+      baseline: ${{ inputs.baseline || 'Azure.GA_2023_03' }}
+
+  mg_aurizontechnology:
+    name: 🚀 Aurizon Technology
+    uses: ./.github/workflows/deploy_landing_zone.yaml
+    needs: test
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      landingZone: mg-aurizontechnology
+      validate: ${{ inputs.validate || false }}
+
+  mg_decommisioned:
+    name: 🚀 Decommisioned
+    uses: ./.github/workflows/deploy_landing_zone.yaml
+    needs: test
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      landingZone: mg-decommisioned
+      validate: ${{ inputs.validate || false }}
+
+  mg_landingzone:
+    name: 🚀 Landing Zone
+    uses: ./.github/workflows/deploy_landing_zone.yaml
+    needs: test
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      landingZone: mg-landingzone
+      validate: ${{ inputs.validate || false }}
+
+  mg_platform:
+    name: 🚀 Platform
+    uses: ./.github/workflows/deploy_landing_zone.yaml
+    needs: test
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      landingZone: mg-platform
+      validate: ${{ inputs.validate || false }}
+
+  mg_sandbox:
+    name: 🚀 Sandbox
+    uses: ./.github/workflows/deploy_landing_zone.yaml
+    needs: test
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      landingZone: mg-sandbox
+      validate: ${{ inputs.validate || false }}

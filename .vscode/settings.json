@@ -1,0 +1,43 @@
+{
+  "files.exclude": {
+    ".vs/": true,
+    "reports/": false,
+    "out/": true
+  },
+  "yaml.format.enable": true,
+  "yaml.format.singleQuote": true,
+  "yaml.format.bracketSpacing": true,
+  "editor.insertSpaces": true,
+  "files.insertFinalNewline": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "[bicep]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-bicep"
+  },
+  "[powershell]": {
+    "editor.formatOnSave": false,
+    "editor.tabSize": 4
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": [
+      "**/.github/workflows/**/*.yaml"
+    ]
+  },
+  "azure.tenant": "a74a1efc-372d-476c-802c-9cbbe5a5c71e",
+  "git.branchProtection": [
+    "main"
+  ],
+  "cSpell.words": [
+    "Aurizon",
+    "codeql",
+    "Codespaces",
+    "devskim",
+    "psrule",
+    "pwsh",
+    "sarif"
+  ]
+}
